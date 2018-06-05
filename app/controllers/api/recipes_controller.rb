@@ -6,8 +6,7 @@ class Api::RecipesController < ApplicationController
 	end
 
 	def show
-		recipe_id = params[:id]
-		@recipe = Recipe.find_by(id: recipe_id) #single recipe hash
+		@recipe = Recipe.find_by(id: params[:id]) #single recipe hash
 		render "show.json.jbuilder"
 	end
 
@@ -17,7 +16,8 @@ class Api::RecipesController < ApplicationController
 			chef: params[:chef],
 			ingredients: params[:ingredients],
 			directions: params[:directions],
-			prep_time: params[:prep_time]
+			prep_time: params[:prep_time],
+			image_url: params[:image_url]
 		) #new recipe hash
 		render "show.json.jbuilder"
 	end
@@ -32,6 +32,7 @@ class Api::RecipesController < ApplicationController
 		@recipe.ingredients = params[:ingredients] || @recipe.ingredients
 		@recipe.directions = params[:directions] || @recipe.directions
 		@recipe.prep_time = params[:prep_time] || @recipe.prep_time
+		@recipe.image_url = params[:image_url] || @recipe.image_url
 
 		@recipe.save
 		render "show.json.jbuilder"
