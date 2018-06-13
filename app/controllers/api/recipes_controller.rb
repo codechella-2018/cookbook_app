@@ -1,5 +1,7 @@
 class Api::RecipesController < ApplicationController
 
+	# current_user = User.find_by(email: "dani@gmail.com")
+
 	def index
 		@recipes = Recipe.all #all recipes in database as an array
 
@@ -8,6 +10,14 @@ class Api::RecipesController < ApplicationController
 		end
 
 		@recipes = @recipes.order(:title)
+
+		# if current_user
+  #     @recipes = current_user.recipes
+  #     render "index.json.jbuilder"
+  #   else
+  #     render json: []
+  #   end
+
 
 		render "index.json.jbuilder"
 	end
@@ -20,11 +30,11 @@ class Api::RecipesController < ApplicationController
 	def create
 		@recipe = Recipe.create(
 			title: params[:title],
-			chef: params[:chef],
 			ingredients: params[:ingredients],
 			directions: params[:directions],
 			prep_time: params[:prep_time],
-			image_url: params[:image_url]
+			image_url: params[:image_url],
+			user_id: current_user.id
 		) #new recipe hash
 		render "show.json.jbuilder"
 	end
@@ -35,7 +45,6 @@ class Api::RecipesController < ApplicationController
 		@recipe = Recipe.find_by(id: recipe_id)
 		#tell it what info to update
 		@recipe.title = params[:title] || @recipe.title
-		@recipe.chef = params[:chef] || @recipe.chef
 		@recipe.ingredients = params[:ingredients] || @recipe.ingredients
 		@recipe.directions = params[:directions] || @recipe.directions
 		@recipe.prep_time = params[:prep_time] || @recipe.prep_time
