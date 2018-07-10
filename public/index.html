@@ -1,54 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>Hello World</title>
-
-	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-
+  <meta charset="UTF-8">
+  <title>My App</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.js"></script>
+  <script src="index.js" defer></script>
 </head>
 <body>
-	
-	<div class="container">
-		<h1>index for recipes</h1>
-
-		<div class="row">
-
-			<!-- repeating data from template -->
-			
-		</div>
+  <div id="vue-app">
 		
-	</div>
-	
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		  <a class="navbar-brand" href="#">Navbar</a>
+		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+		    <span class="navbar-toggler-icon"></span>
+		  </button>
+		  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+		    <ul class="navbar-nav">
+		      <li class="nav-item active">
+		        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+		      </li>
+		      <li class="nav-item">
+		        <a class="nav-link" href="#">Features</a>
+		      </li>
+		      <li class="nav-item">
+		        <a class="nav-link" href="#">Pricing</a>
+		      </li>
+		      <li class="nav-item dropdown">
+		        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		          Dropdown link
+		        </a>
+		        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+		          <a class="dropdown-item" href="#">Action</a>
+		          <a class="dropdown-item" href="#">Another action</a>
+		          <a class="dropdown-item" href="#">Something else here</a>
+		        </div>
+		      </li>
+		    </ul>
+		  </div>
+		</nav>
 
+		<div class="container">
+			<router-view>
+				<!-- template goes in here -->
+			</router-view>
+		</div>
+
+  </div>
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <script src="index.js" defer></script>
 </body>
 </html>
 
-<template id="recipe-card">
-	<div class="card col-md-4 col-xs-12">
-		<!-- dynamic img src -->
-	  <img class="card-img-top" src="https://hips.hearstapps.com/delish/assets/18/08/1519321899-hard-boiled-eggs-horizontal.jpg" alt="Card image cap">
-	  <div class="card-body">
-	  	<!-- dynamic card title -->
-	    <h5 class="card-title"></h5>
-	    <!-- dynamic card chef -->
-	    <p class="chef card-text"></p>
-	    <!-- dynamic card prep time -->
-	    <p class="prep-time card-text"></p>
-	    <p class="ingredients card-text"></p>
-	    <a href="" class="btn btn-primary">View Recipe</a>
-	  </div>
-	</div>
-</template>
+<template id="home-page">
+  <div class="vue-component">
 
+    <div class="row">
+			<div v-for="recipe in recipes" class="card col-4">
+			  <img class="card-img-top" :src="recipe.image_url" alt="Card image cap">
+			  <div class="card-body">
+			    <h5 class="card-title">{{ recipe.title }}</h5>
+			    <p class="card-text">Ingredients: {{ recipe.ingredients }}</p>
+			    <p class="card-text">Prep time: {{ recipe.formatted.prep_time }}</p>
+			    <a href="#" class="btn btn-primary">See Recipe</a>
+			  </div>
+			</div>    	
+    </div>
+
+  </div>
+</template>
 
 
 

@@ -1,19 +1,31 @@
-var recipeTemplate = document.querySelector('#recipe-card');
-var recipeRow = document.querySelector(".row");
+/* global Vue, VueRouter, axios */
 
-/* global axios */
-axios.get("http://localhost:3000/api/recipes").then(function(response){
-	var recipes = response.data;
-	console.log(recipes);
+var HomePage = {
+  template: "#home-page",
+  data: function() {
+    return {
+      message: "Welcome to Vue.js!",
+      recipes: []
+    };
+  },
+  created: function() {
+  	axios.get("/api/recipes").then(function(response){
+  		this.recipes = response.data;
+  		console.log(this.recipes);
+  	}.bind(this));
+  },
+  methods: {},
+  computed: {}
+};
 
-	// for each recipe, create a recipeTemplate card with that recipes data
-	recipes.forEach(function(recipe){
-		var recipeClone = recipeTemplate.content.cloneNode(true);
-		recipeClone.querySelector(".card-img-top").src = recipe.image_url;
-		recipeClone.querySelector(".card-title").innerText = recipe.title;
-		recipeClone.querySelector(".chef").innerText = recipe.chef_name;
-		recipeClone.querySelector(".prep-time").innerText = recipe.formatted.prep_time;
-		recipeClone.querySelector(".ingredients").innerText = recipe.formatted.ingredients;
-		recipeRow.appendChild(recipeClone);
-	});
-})
+var router = new VueRouter({
+  routes: [{ path: "/", component: HomePage }],
+  scrollBehavior: function(to, from, savedPosition) {
+    return { x: 0, y: 0 };
+  }
+});
+
+var app = new Vue({
+  el: "#vue-app",
+  router: router
+});
