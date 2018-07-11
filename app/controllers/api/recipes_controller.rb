@@ -28,15 +28,21 @@ class Api::RecipesController < ApplicationController
 	end
 
 	def create
-		@recipe = Recipe.create(
+		@recipe = Recipe.new(
 			title: params[:title],
 			ingredients: params[:ingredients],
 			directions: params[:directions],
 			prep_time: params[:prep_time],
-			image_url: params[:image_url],
-			user_id: current_user.id
+			image_url: params[:image_url]
 		) #new recipe hash
-		render "show.json.jbuilder"
+		if current_user
+			@recipe.user_id = current_user.id
+		end
+		if @recipe.save
+			render "show.json.jbuilder"
+		else
+			render json: {errors: @recipe.errors.full_messages}, status: :unprocessable_entity
+		end
 	end
 
 	def update
