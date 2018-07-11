@@ -60,6 +60,8 @@
 <template id="home-page">
   <div class="vue-component">
 
+  	<a href="/#/sample">Sample Page</a>
+
     <div class="row">
 			<div v-for="recipe in recipes" class="card col-4">
 			  <img class="card-img-top" :src="recipe.image_url" alt="Card image cap">
@@ -73,6 +75,17 @@
     </div>
 
   </div>
+</template>
+
+<template id="sample-page">
+	<div class="vue-component">
+
+		<a href="/#/">Home Page</a>
+
+		<h1>{{ message }}</h1>
+		<p>This is super interesting...</p>
+
+	</div>
 </template>
 
 
