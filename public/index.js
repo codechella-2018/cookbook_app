@@ -175,7 +175,7 @@ var RecipesEditPage = {
     };
   },
   created: function() {
-    
+    $('#exampleModal').modal('hide');
     axios.get("/api/recipes/" + this.$route.params.id).then(function(response){
       this.title = response.data.title;
       this.ingredients = response.data.ingredients;

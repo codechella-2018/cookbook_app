@@ -93,10 +93,10 @@
             <p>Ingredients: {{ currentRecipe.ingredients }}</p>
             <p>Directions: {{ currentRecipe.directions }}</p>
             <p>Prep Time: {{ currentRecipe.prep_time }}</p>
-            <!-- <a v-bind:href="'/#/recipes/' + currentRecipe.id + '/edit'">Edit</a> -->
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <a class="btn btn-primary" v-bind:href="'/#/recipes/' + currentRecipe.id + '/edit'">Edit Recipe</a>
           </div>
         </div>
       </div>
