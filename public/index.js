@@ -4,7 +4,8 @@ var HomePage = {
   template: "#home-page",
   data: function() {
     return {
-      recipes: []
+      recipes: [],
+      currentRecipe: {}
     };
   },
   created: function() {
@@ -13,7 +14,12 @@ var HomePage = {
   		console.log(this.recipes);
   	}.bind(this));
   },
-  methods: {},
+  methods: {
+    setCurrentRecipe: function(recipe) {
+      this.currentRecipe = recipe;
+      console.log(this.currentRecipe);
+    }
+  },
   computed: {}
 };
 
@@ -109,7 +115,6 @@ var RecipesNewPage = {
   data: function() {
     return {
       title: "",
-      chef: "",
       ingredients: "",
       directions: "",
       prepTime: "",
@@ -157,6 +162,53 @@ var RecipesShowPage = {
   computed: {}
 };
 
+var RecipesEditPage = {
+  template: "#recipes-edit-page",
+  data: function() {
+    return {
+      title: "",
+      ingredients: "",
+      directions: "",
+      prepTime: "",
+      imageUrl: "",
+      errors: []
+    };
+  },
+  created: function() {
+    
+    axios.get("/api/recipes/" + this.$route.params.id).then(function(response){
+      this.title = response.data.title;
+      this.ingredients = response.data.ingredients;
+      this.directions = response.data.directions;
+      this.prepTime = response.data.prep_time;
+      this.imageUrl = response.data.image_url;
+    }.bind(this));
+  },
+  methods: {
+    submit: function() {
+      var params = {
+        title: this.title,
+        image_url: this.imageUrl,
+        ingredients: this.ingredients,
+        directions: this.directions,
+        prep_time: this.prepTime
+      };
+      axios
+        .patch("/api/recipes/" + this.$route.params.id, params)
+        .then(function(response) {
+          router.push("/recipes/" + this.$route.params.id);
+        }.bind(this))
+        .catch(
+          function(error) {
+            this.errors = error.response.data.errors;
+          }.bind(this)
+        );
+    }
+  }
+};
+
+
+
 var router = new VueRouter({
   routes: [
   	{ path: "/", component: HomePage }, 
@@ -165,7 +217,8 @@ var router = new VueRouter({
   	{ path: "/login", component: LoginPage },
   	{ path: "/logout", component: LogoutPage },
     { path: "/recipes/new", component: RecipesNewPage },
-  	{ path: "/recipes/:id", component: RecipesShowPage }
+    { path: "/recipes/:id", component: RecipesShowPage },
+  	{ path: "/recipes/:id/edit", component: RecipesEditPage },
   ],
   scrollBehavior: function(to, from, savedPosition) {
     return { x: 0, y: 0 };

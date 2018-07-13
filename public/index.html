@@ -70,10 +70,39 @@
 			    <h5 class="card-title">{{ recipe.title }}</h5>
 			    <p class="card-text">Ingredients: {{ recipe.ingredients }}</p>
 			    <p class="card-text">Prep time: {{ recipe.formatted.prep_time }}</p>
-			    <a v-bind:href="'/#/recipes/' + recipe.id" class="btn btn-primary">See Recipe</a>
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" v-on:click="setCurrentRecipe(recipe)">
+            More Info
+          </button>
+			    <!-- <a v-bind:href="'/#/recipes/' + recipe.id" class="btn btn-primary">See Recipe</a> -->
 			  </div>
 			</div>    	
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">{{ currentRecipe.title }}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Ingredients: {{ currentRecipe.ingredients }}</p>
+            <p>Directions: {{ currentRecipe.directions }}</p>
+            <p>Prep Time: {{ currentRecipe.prep_time }}</p>
+            <!-- <a v-bind:href="'/#/recipes/' + currentRecipe.id + '/edit'">Edit</a> -->
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
 
   </div>
 </template>
@@ -183,6 +212,40 @@
     <p>Ingredients: {{ recipe.ingredients }}</p>
     <p>Directions: {{ recipe.directions }}</p>
     <p>Prep Time: {{ recipe.formatted.prep_time }}</p>
+
+    <a v-bind:href="'/#/recipes/' + recipe.id + '/edit'">Edit</a>
+
+  </div>
+</template>
+
+<template id="recipes-edit-page">
+  <div class="vue-component">
+
+      <h1>Edit Recipe</h1>
+      <ul>
+        <li class="text-danger" v-for="error in errors">{{ error }}</li>
+      </ul>
+      <div class="form-group">
+        <label>Title:</label> 
+        <input type="text" class="form-control" v-model="title">
+      </div>
+      <div class="form-group">
+        <label>Ingredients:</label>
+        <input type="text" class="form-control" v-model="ingredients">
+      </div>
+      <div class="form-group">
+        <label>Directions:</label>
+        <input type="text" class="form-control" v-model="directions">
+      </div>
+      <div class="form-group">
+        <label>Image:</label>
+        <input type="text" class="form-control" v-model="imageUrl">
+      </div>
+      <div class="form-group">
+        <label>Prep Time:</label>
+        <input type="number" class="form-control" v-model="prepTime">
+      </div>
+      <button class="btn btn-primary" v-on:click="submit()">Submit</button>
 
   </div>
 </template>
