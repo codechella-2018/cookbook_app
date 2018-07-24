@@ -207,6 +207,23 @@ var RecipesEditPage = {
   }
 };
 
+var UsersShowPage = {
+  template: "#users-show-page",
+  data: function() {
+    return {
+      user: {}
+    };
+  },
+  created: function() {
+    axios.get("/profile").then(function(response){
+      this.user = response.data;
+      console.log(this.user);
+    }.bind(this));
+  },
+  methods: {},
+  computed: {}
+};
+
 
 
 var router = new VueRouter({
@@ -218,7 +235,8 @@ var router = new VueRouter({
   	{ path: "/logout", component: LogoutPage },
     { path: "/recipes/new", component: RecipesNewPage },
     { path: "/recipes/:id", component: RecipesShowPage },
-  	{ path: "/recipes/:id/edit", component: RecipesEditPage },
+    { path: "/recipes/:id/edit", component: RecipesEditPage },
+  	{ path: "/profile", component: UsersShowPage }
   ],
   scrollBehavior: function(to, from, savedPosition) {
     return { x: 0, y: 0 };
@@ -232,6 +250,14 @@ var app = new Vue({
     var jwt = localStorage.getItem("jwt");
     if (jwt) {
       axios.defaults.headers.common["Authorization"] = jwt;
+    }
+  },
+  methods: {
+    isLoggedIn: function() {
+      if(localStorage.getItem("jwt")) {
+        return true;
+      }
+      return false;
     }
   }
 });

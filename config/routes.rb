@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   	patch "/recipes/:id" => "recipes#update"
   	delete "/recipes/:id" => "recipes#destroy"
 	end
+  get "/profile" => "users#show"
 	post "/users" => "users#create"
   post '/user_token' => 'user_token#create'
 

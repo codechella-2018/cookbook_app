@@ -23,6 +23,9 @@
 		      <li class="nav-item">
 		        <a class="nav-link" href="/#/">Home</a>
 		      </li>
+          <li class="nav-item" v-if="isLoggedIn()" >
+            <a class="nav-link" href="/#/profile">My Profile</a>
+          </li>
 		      <li class="nav-item">
 		        <a class="nav-link" href="/#/signup">Signup</a>
 		      </li>
@@ -251,7 +254,15 @@
 </template>
 
 
+<template id="users-show-page">
+  <div class="vue-component">
 
+
+    <h1>{{ user }}</h1>
+    <p>This is super interesting...</p>
+
+  </div>
+</template>
 
 
 
