@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   def show
     if current_user
       @user = current_user
-      render 'show.json.builder'
+      render 'show.json.jbuilder'
     else
       render json: {}
     end

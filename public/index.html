@@ -26,13 +26,13 @@
           <li class="nav-item" v-if="isLoggedIn()" >
             <a class="nav-link" href="/#/profile">My Profile</a>
           </li>
-		      <li class="nav-item">
+		      <li v-if="!isLoggedIn()" class="nav-item">
 		        <a class="nav-link" href="/#/signup">Signup</a>
 		      </li>
-		      <li class="nav-item">
+		      <li v-if="!isLoggedIn()" class="nav-item">
 		        <a class="nav-link" href="/#/login">Login</a>
 		      </li>
-		      <li class="nav-item">
+		      <li v-if="isLoggedIn()" class="nav-item">
 		        <a class="nav-link" href="/#/logout">Logout</a>
 		      </li>
 		      <li class="nav-item dropdown">
@@ -65,6 +65,8 @@
 
 <template id="home-page">
   <div class="vue-component">
+
+    <h2>{{ getUserId() }}</h2>
 
     <div class="row">
 			<div v-for="recipe in recipes" class="card col-4">
@@ -253,12 +255,12 @@
   </div>
 </template>
 
-
 <template id="users-show-page">
   <div class="vue-component">
 
 
     <h1>{{ user }}</h1>
+    <p>{{ getUserId() }}</p>
     <p>This is super interesting...</p>
 
   </div>

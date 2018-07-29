@@ -18,6 +18,9 @@ var HomePage = {
     setCurrentRecipe: function(recipe) {
       this.currentRecipe = recipe;
       console.log(this.currentRecipe);
+    },
+    getUserId: function() {
+      return localStorage.getItem("user_id");
     }
   },
   computed: {}
@@ -85,9 +88,11 @@ var LoginPage = {
       axios
         .post("/user_token", params)
         .then(function(response) {
+          console.log(response.data);
           axios.defaults.headers.common["Authorization"] =
             "Bearer " + response.data.jwt;
           localStorage.setItem("jwt", response.data.jwt);
+          localStorage.setItem("user_id", response.data.user.id);
           router.push("/");
         })
         .catch(
@@ -106,6 +111,7 @@ var LogoutPage = {
   created: function() {
     axios.defaults.headers.common["Authorization"] = undefined;
     localStorage.removeItem("jwt");
+    localStorage.removeItem("user_id");
     router.push("/");
   }
 };
@@ -220,7 +226,11 @@ var UsersShowPage = {
       console.log(this.user);
     }.bind(this));
   },
-  methods: {},
+  methods: {
+    getUserId: function() {
+      return localStorage.getItem("user_id");
+    }
+  },
   computed: {}
 };
 
